@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 //import axios from "axios";
+import axiosWithAuth from "../util/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -21,10 +22,34 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    axios
+    .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, movieData)
+    .then(res => {
+      console.log("Res: ", res);
+      props.setMovieList(state => state.map(movie => {
+          if (movie.id === movieData.id) {
+              return res.data;
+          } else {
+              return movie;
+          };
+      }) );
+      props.history.push(`/`);
+    })
+    .catch(err => console.log("Error is: ", err));
   };
 
   const deleteColor = color => {
-    // make a delete request to delete this color
+    axiosWithAuth()
+    .delete(`http://localhost:5000/api/colors/${color.id}`)
+    .then(() => {
+      updateColors(state => state.filter(color => color.id == color.id ))
+      //history.push(`/bubblepage`)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+
   };
 
   return (
