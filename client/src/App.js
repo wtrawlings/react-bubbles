@@ -10,12 +10,11 @@ import PrivateRoute from "./components/PrivateRoute";
 function App() {
   return (
       <div className="App">
-        <h1>APP BUBBLES</h1>
-        <p> </p>
-        <Login />
+        
+        {/* <Login /> */}
         <Switch>
           <Route exact path="/" component={Login} />
-          <PrivateRoute path="/bubblePage" component={BubblePage} />
+          <PrivateRoute path="/bubblepage" component={BubblePage} />
         </Switch>
       </div>
   );

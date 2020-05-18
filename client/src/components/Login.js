@@ -14,7 +14,7 @@ const Login = (props) => {
     setIsLoading(true);
     axios.post('http://localhost:5000/api/login', { username, password })
     .then((res) => {
-        console.log(res);//maybe res.payload with no data
+        //console.log(res);//maybe res.payload with no data
         localStorage.setItem('token', res.data.payload);
         
     })
@@ -25,15 +25,14 @@ const Login = (props) => {
     setUsername('');
     setPassword('');
     setIsLoading(false);
-    props.history.push("/bubblePage")
+    props.history.push("/bubblepage")
 }
-
 
   return (
     <div>
       <h1>Welcome to the Bubble App!</h1>
       <p>Build a login page here</p>
-      <div className='login-form'>
+        <div>
             <h2>{isLoading ? "Loading" : "LOGIN"}</h2>
             <form onSubmit={submitHandler}>
               <input type="text" name='username' placeholder="username" onChange={e => setUsername(e.target.value)} />
