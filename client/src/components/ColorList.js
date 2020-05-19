@@ -7,7 +7,7 @@ const initialColor = {
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors }) => {
+const ColorList = ({ colors, updateColors }) => {  
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
@@ -22,18 +22,18 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-    axios
-    .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, movieData)
+    axiosWithAuth()
+    .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
     .then(res => {
       console.log("Res: ", res);
-      props.setMovieList(state => state.map(movie => {
-          if (movie.id === movieData.id) {
+      colors(state => state.map(color => {
+          if (color.id === colorToEdit.id) {
               return res.data;
           } else {
-              return movie;
+              return color;
           };
       }) );
-      props.history.push(`/`);
+      // props.history.push(`/`);
     })
     .catch(err => console.log("Error is: ", err));
   };
@@ -44,6 +44,7 @@ const ColorList = ({ colors, updateColors }) => {
     .then(() => {
       updateColors(state => state.filter(color => color.id == color.id ))
       //history.push(`/bubblepage`)
+      //How do I do the update? props.history.push doesn't work because no props
     })
     .catch(err => {
       console.log(err)
