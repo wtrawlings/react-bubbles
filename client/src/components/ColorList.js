@@ -26,8 +26,8 @@ const ColorList = ({ colors, updateColors }) => {
     .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
     .then(res => {
       console.log("Res: ", res);
-      setColorToEdit(state => state.map(color => {
-          if (color.id === colorToEdit.id) {
+      updateColors(state => state.map(color => {
+          if (color.id === res.data.id) {
               return res.data;
           } else {
               return color;
@@ -41,8 +41,8 @@ const ColorList = ({ colors, updateColors }) => {
   const deleteColor = color => {
     axiosWithAuth()
     .delete(`http://localhost:5000/api/colors/${color.id}`)
-    .then(() => {
-      updateColors(state => state.filter(color => color.id == color.id ))
+    .then((res) => {
+      updateColors(colors.filter(color => color.id !== res.data))
       //history.push(`/bubblepage`)
       //How do I do the update? props.history.push doesn't work because no props
     })
