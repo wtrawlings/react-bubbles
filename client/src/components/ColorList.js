@@ -26,7 +26,7 @@ const ColorList = ({ colors, updateColors }) => {
     .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
     .then(res => {
       console.log("Res: ", res);
-      colors(state => state.map(color => {
+      setColorToEdit(state => state.map(color => {
           if (color.id === colorToEdit.id) {
               return res.data;
           } else {
